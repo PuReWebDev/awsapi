@@ -1,7 +1,6 @@
 CREATE TABLE `locale` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) NOT NULL,
-	`marketplace_id` varchar(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -25,7 +24,7 @@ CREATE TABLE `browse_node` (
 CREATE TABLE `search_index` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) NOT NULL,
-	`browse_node_id` varchar(255) NOT NULL,
+	`browse_node_id` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -58,8 +57,6 @@ CREATE TABLE `manufacturer` (
 	`name` varchar(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
-
-ALTER TABLE `locale` ADD CONSTRAINT `locale_fk0` FOREIGN KEY (`marketplace_id`) REFERENCES `local_search_index`(`id`);
 
 ALTER TABLE `local_search_index` ADD CONSTRAINT `local_search_index_fk0` FOREIGN KEY (`locale_id`) REFERENCES `locale`(`id`);
 
