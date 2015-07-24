@@ -1,0 +1,8 @@
+pu_re_web_dev_product:
+    resource: "@PuReWebDevProductBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
