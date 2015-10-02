@@ -19,15 +19,13 @@ class DefaultController extends Controller
      * @Route("/hello/{name}")
      * @Template()
      */
-    public function indexAction($name)
+    public function indexAction($nodeid)
     {
         $apaiIO = $this->get('apaiio');
         $browseNodeLookup = new BrowseNodeLookup();
-        $browseNodeLookup->setNodeId(1000);
+        $browseNodeLookup->setNodeId($nodeid);
         $formattedResponse = $apaiIO->runOperation($browseNodeLookup);
-        print_r($formattedResponse);
-        exit();
-        return array('name' => $name);
+        return $formattedResponse;
     }
 
     /**
@@ -38,61 +36,50 @@ class DefaultController extends Controller
     {
         $apaiIO = $this->get('apaiio');
         $lookup = new Lookup();
-        $lookup->setItemId('B009GDHYPQ,B00RPM6UZA');
+        $lookup->setItemId($asin);
         $lookup->setResponseGroup(array('Large', 'Small'));
         $formattedResponse = $apaiIO->runOperation($lookup);
-
-        print_r($formattedResponse);
-        exit();
-        return array('name' => $name);
+        return $formattedResponse;
     }
 
     /**
      * @\Symfony\Component\Routing\Annotation\Route("/similaritylookup")
      */
-    public function similaritylookupAction()
+    public function similaritylookupAction($asin)
     {
         $apaiIO = $this->get('apaiio');
         $lookup = new SimilarityLookup();
-        $lookup->setItemId('B009GDHYPQ');
+        $lookup->setItemId($asin);
         $lookup->setResponseGroup(array('Large', 'Small'));
         $formattedResponse = $apaiIO->runOperation($lookup);
-        print_r($formattedResponse);
-        exit();
-        return array('name' => $name);
+        return $formattedResponse;
     }
 
     /**
      * @\Symfony\Component\Routing\Annotation\Route("/search")
      */
-    public function searchAction()
+    public function searchAction($keyword,$category)
     {
         $apaiIO = $this->get('apaiio');
         $search = new Search();
-        $search->setCategory('DVD');
-        $search->setActor('Bruce Willis');
-        $search->setKeywords('Die Hard');
+        $search->setCategory($category);
+        //$search->setActor('Bruce Willis');
+        $search->setKeywords($keyword);
         $search->setPage(3);
         $search->setResponseGroup(array('Large', 'Small'));
         $formattedResponse = $apaiIO->runOperation($search);
-        print_r($formattedResponse);
-        exit();
-        return array('name' => $name);
+        return $formattedResponse;
     }
 
     /**
      * @\Symfony\Component\Routing\Annotation\Route("/cartcreate")
      */
-    public function cartcreateAction()
+    public function cartcreateAction($asin,$quantity)
     {
         $apaiIO = $this->get('apaiio');
-
         $cartCreate = new CartCreate();
-        $cartCreate->addItem("B005OVC4G8", 1, true);
+        $cartCreate->addItem($asin, $quantity, true);
         $formattedResponse = $apaiIO->runOperation($cartCreate);
-
-        print_r($formattedResponse);
-        exit();
-        return array('name' => $name);
+        return $formattedResponse;
     }
 }
